@@ -1,0 +1,13 @@
+.ulBreadcrumb{
+    display: flex;
+    list-style: none;
+}
+
+.ulBreadcrumb li, a{
+    padding: 3px;
+    color:grey;
+}
+
+.ulBreadcrumb a{
+    text-decoration: none;
+}

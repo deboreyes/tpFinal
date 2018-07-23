@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.Search{
+  width: 100%;
+}
+
+form{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+form input[type=submit]{
+    /* background:url(../Assets/.png) no-repeat; */
+    cursor:pointer;
+    width: 20px;
+    height: 20px;
+    border: none;
+}
+
+form input[type=text]{
+  width: 40%;
+  height: 20px;
+  outline:none;
+}

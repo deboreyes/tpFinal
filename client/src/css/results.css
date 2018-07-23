@@ -1,0 +1,14 @@
+.Results{
+    width: 100%;
+    background-color:lightgray;
+}
+
+.ulResults{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ulResults li{
+    width: 100%;
+    display: flex;
+}
