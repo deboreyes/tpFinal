@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/item.css';
 import { Breadcrumb } from './Breadcrumb';
 
 class Item extends Component {
@@ -7,37 +8,41 @@ class Item extends Component {
 		this.state = {
 			result: {},
 			ready: false,
-			error:''
+			error: ''
 		};
 	}
 
 	componentDidMount() {
-			fetch('/api/items/' + this.props.match.params.id)
-			.then(res=>{
+		fetch('/api/items/' + this.props.match.params.id)
+			.then(res => {
 				if (!res.ok) throw Error(res);
 				return res.json();
 			})
-			.then(result => this.setState({ result: result.item, ready: true,error:'' }))
-			.catch(error=>this.setState({error,ready:false}))	
+			.then(result => this.setState({ result: result.item, ready: true, error: '' }))
+			.catch(error => this.setState({ error, ready: false }))
 	}
 
 	render() {
 		let item = this.state.result;
 		return (
-			<div>              
-				{this.state.error && <div>No se encontraron resultados</div>}  
+			<div className='Item'>
+				{this.state.error && <div>No se encontraron resultados</div>}
 				{this.state.ready &&
 					<div>
 						{item.categories && <Breadcrumb categories={item.categories} />}
-						<img src={item.picture} alt={item.title} />
-						<ul>
-							<li>{item.condition}</li>
-							<li>{item.sold_quantity} vendidos</li>
-							<li>{item.title}</li>
-							<li>{item.price.currency + (item.price.amount + item.price.decimals / 100)}</li>
-						</ul>
-						<button onClick={(event) => event.preventDefault()}>comprar</button>
-						<p>{item.description}</p>
+						<div className='itemContainer'>
+							<div className='itemInfo'>
+								<img src={item.picture} alt={item.title} />
+								<p className='description'>{item.description}</p>
+							</div>
+							<div className='itemDetails'>
+								<span className='conditions'>{item.condition} - {item.sold_quantity} vendidos</span>
+								<h4>{item.title}</h4>
+								<hr />
+								<div className="itemPrice">{item.price.currency + (item.price.amount + item.price.decimals / 100)}</div>
+								<button className='buyNow' onClick={(event) => event.preventDefault()}>comprar</button>
+							</div>
+						</div>
 					</div>}
 			</div>
 		)

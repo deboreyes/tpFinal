@@ -29,7 +29,7 @@ async function createItem(data, description = "") {
         item.description = description;
         item.categories = await getCategories(data.category_id)
     }
-    else if (data.address.state_name) item.state=data.address.state_name
+    else if (data.address.state_name) item.state = data.address.state_name
     return item;
 }
 
@@ -51,7 +51,7 @@ self.getItem = id => {
         .then(async result => {
             return {
                 author: { name: 'Débora', lastname: 'Reyes' },
-                item: await createItem(result[0].data, result[1].data.plain_text)
+                item: await createItem(result[0].data, result[1].data.plain_text || 'Sin detalles del producto')
             }
         })
         .catch(error => console.log(error))

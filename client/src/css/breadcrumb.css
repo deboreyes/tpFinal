@@ -1,10 +1,10 @@
 .ulBreadcrumb{
     display: flex;
-    list-style: none;
+    padding: 10px;
 }
 
 .ulBreadcrumb li, a{
-    padding: 3px;
+    padding: 2px;
     color:grey;
 }
 

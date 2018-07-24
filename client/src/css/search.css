@@ -1,8 +1,3 @@
-*{
-  margin: 0;
-  padding: 0;
-}
-
 .Search{
   width: 100%;
 }
@@ -12,18 +7,31 @@ form{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 5px;
 }
 
-form input[type=submit]{
-    /* background:url(../Assets/.png) no-repeat; */
-    cursor:pointer;
-    width: 20px;
-    height: 20px;
-    border: none;
+input{
+  height:50px; 
+  padding:10px;
+  margin: 2px;
+  font-size: 15px;
+  border-radius:5px;
+  border:3px solid #3b86c4;
+  outline:none; 
 }
 
 form input[type=text]{
-  width: 40%;
-  height: 20px;
-  outline:none;
+  width:540px;
+}
+
+form input[type=submit] {
+  width:100px;
+  text-align:center;
+  color:white; 
+  background: #3b86c4;
+  cursor:pointer;
+}
+
+form a{
+  padding:0;
 }

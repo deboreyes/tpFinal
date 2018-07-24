@@ -24,18 +24,12 @@ class Search extends Component {
 	render() {
 		return (
 			<div className="Search">
-				<Router>
-					<form >
+					<form>
 						<input type='text' name='search' value={this.state.search} onChange={(event) => this.handleOnChange(event)} />
 						<Link to={`/items?search=${this.state.search}`}>
-							<input type="submit" value='' />
+							<input type="submit" value='BUSCAR' />
 						</Link>
-						<Switch>
-							<Route exact path='/items/:id' component={Item} />
-							<Route path='/items' component={Results} />
-						</Switch>
 					</form>
-				</Router>
 			</div>
 		)
 	}

@@ -15,10 +15,10 @@ class App extends Component {
       <div className='App'>
         <Router>
           <div>
+            <Search/>
             <Switch>
-              <Route exact path='/' component={Search} />
               <Route exact path='/items/:id' component={Item} />
-              <Route path='/items' component={Results} />
+              <Route exact path='/items' component={Results} />
             </Switch>
           </div>
         </Router>
