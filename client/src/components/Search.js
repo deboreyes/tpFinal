@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import {
-	BrowserRouter as Router,
-	Route,
-	Link,
-	Switch
-} from 'react-router-dom';
-import '../css/search.css';
-import Results from './Results';
-import Item from './Item';
+import {Link} from 'react-router-dom';
+import '../css/Search.css';
 
 class Search extends Component {
 	constructor(props) {

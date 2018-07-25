@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import '../css/item.css';
+import '../css/Item.css';
 import { Breadcrumb } from './Breadcrumb';
+import { Message } from './Message';
 
 class Item extends Component {
 	constructor(props) {
@@ -22,11 +23,15 @@ class Item extends Component {
 			.catch(error => this.setState({ error, ready: false }))
 	}
 
+	getPrice = obj =>  obj.currency + (obj.decimals ? (obj.amount + obj.decimals / 100).toFixed(2) : obj.amount);
+
 	render() {
+		if (this.state.error) return <Message data='noResults'/>
+		if (!this.state.ready) return <Message data='loading' />
 		let item = this.state.result;
 		return (
 			<div className='Item'>
-				{this.state.error && <div>No se encontraron resultados</div>}
+				{/* {!this.state.ready && <Message data={'loading'} />} */}
 				{this.state.ready &&
 					<div>
 						{item.categories && <Breadcrumb categories={item.categories} />}
@@ -38,8 +43,8 @@ class Item extends Component {
 							<div className='itemDetails'>
 								<span className='conditions'>{item.condition} - {item.sold_quantity} vendidos</span>
 								<h4>{item.title}</h4>
-								<hr />
-								<div className="itemPrice">{item.price.currency + (item.price.amount + item.price.decimals / 100)}</div>
+								<hr />								
+								<div className="itemPrice">{this.getPrice(item.price)}</div>
 								<button className='buyNow' onClick={(event) => event.preventDefault()}>comprar</button>
 							</div>
 						</div>

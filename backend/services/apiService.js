@@ -39,7 +39,7 @@ self.getItems = query => {
             let categoriesObject = result.data.available_filters.find(filter => filter.id == "category");
             return {
                 author: { name: 'Débora', lastname: 'Reyes' },
-                categories: categoriesObject ? await getCategories(categoriesObject.values) : '',
+                categories: categoriesObject && await getCategories(categoriesObject.values),
                 items: await Promise.all(result.data.results.map(async item => await createItem(item)))
             }
         })
