@@ -1,0 +1,1 @@
+export const getPrice = obj => obj.currency + (obj.decimals ? (obj.amount + obj.decimals / 100).toFixed(2) : obj.amount);

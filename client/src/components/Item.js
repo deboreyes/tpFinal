@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/Item.css';
 import { Breadcrumb } from './Breadcrumb';
 import { Message } from './Message';
+import { getPrice } from '../common/util';
 
 class Item extends Component {
 	constructor(props) {
@@ -23,10 +24,8 @@ class Item extends Component {
 			.catch(error => this.setState({ error, ready: false }))
 	}
 
-	getPrice = obj =>  obj.currency + (obj.decimals ? (obj.amount + obj.decimals / 100).toFixed(2) : obj.amount);
-
 	render() {
-		if (this.state.error) return <Message data='noResults'/>
+		if (this.state.error) return <Message data='noResults' />
 		if (!this.state.ready) return <Message data='loading' />
 		let item = this.state.result;
 		return (
@@ -43,9 +42,9 @@ class Item extends Component {
 							<div className='itemDetails'>
 								<span className='conditions'>{item.condition} - {item.sold_quantity} vendidos</span>
 								<h4>{item.title}</h4>
-								<hr />								
-								<div className="itemPrice">{this.getPrice(item.price)}</div>
-								<button className='buyNow' onClick={(event) => event.preventDefault()}>comprar</button>
+								<hr />
+								<div className="itemPrice">{getPrice(item.price)}</div>
+								<button className='buyNow'>comprar</button>
 							</div>
 						</div>
 					</div>}

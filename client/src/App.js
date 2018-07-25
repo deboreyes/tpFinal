@@ -16,15 +16,13 @@ const App = () =>
       <div>
         <Search />
         <Switch>
-          <Route exact path='/'/>
+          <Route exact path='/' />
           <Route exact path='/items/:id' component={Item} />
           <Route exact path='/items' component={Results} />
-          <Route render={() => <Message data='404'/>}/>
+          <Route render={() => <Message data='404' />} />
         </Switch>
       </div>
     </Router>
   </div>
-
-
 
 export default App;

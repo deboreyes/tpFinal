@@ -5,6 +5,7 @@ import '../css/Results.css';
 import freeShippingImg from '../Assets/free-shipping.png';
 import { Breadcrumb } from './Breadcrumb';
 import { Message } from './Message';
+import { getPrice } from '../common/util';
 
 class Results extends Component {
     constructor(props) {
@@ -45,8 +46,6 @@ class Results extends Component {
         }
     }
 
-    getPrice = obj => obj.currency + (obj.decimals ? (obj.amount + obj.decimals / 100).toFixed(2) : obj.amount);
-
     render() {
         if (this.state.error) return <Message data={this.state.error} />
         if (!this.state.ready) return <Message data='loading' />
@@ -62,7 +61,7 @@ class Results extends Component {
                                     <Link to={`/items/${item.id}`}><img src={item.picture} alt={item.title} className='productImg' /></Link>
                                     <div className="info">
                                         <h4>{item.title}</h4>
-                                        <span className="price">{this.getPrice(item.price)}</span>
+                                        <span className="price">{getPrice(item.price)}</span>
                                         <Link to={`/items/${item.id}`}><button className="buyNow">Comprar</button></Link>
                                     </div>
                                     <div className="details">
@@ -76,4 +75,5 @@ class Results extends Component {
         )
     }
 }
+
 export default Results;
