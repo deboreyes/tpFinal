@@ -32,7 +32,7 @@ class Results extends Component {
                 .then(result => this.setState({ items: result.items, categories: result.categories, ready: true, error: '' }))
                 .catch(error => this.setState({ error: 'noResults' }))
         }
-        else this.setState({ error: query === '' ? 'empty' : '404' });
+        else this.setState({ error: query === '' ? 'empty' : '404' });//query = '' null undefined
     }
 
 

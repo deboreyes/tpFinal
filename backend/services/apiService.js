@@ -6,7 +6,6 @@ async function getCategories(info) {
     let id = Array.isArray(info) ? info.find(categorie => categorie.results == Math.max.apply(Math, info.map(c => c.results))).id : info;
     return axios.get(` https://api.mercadolibre.com/categories/${id}`)
         .then(result => result.data.path_from_root.map(path => path.name))
-        .catch(error => console.log(error))
 }
 
 async function createItem(data, description = "") {
@@ -15,8 +14,7 @@ async function createItem(data, description = "") {
         title: data.title,
         price: {
             currency: await axios.get(`https://api.mercadolibre.com/currencies/${data.currency_id}`)
-                .then(res => res.data.symbol)
-                .catch(error => console.log(error)),
+                .then(res => res.data.symbol),
             amount: Math.trunc(data.price),
             decimals: Math.round((data.price - Math.trunc(data.price)) * 100)
         },
@@ -36,14 +34,16 @@ async function createItem(data, description = "") {
 self.getItems = query => {
     return axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=${query}&limit=4`)
         .then(async result => {
-            let categoriesObject = result.data.available_filters.find(filter => filter.id == "category");
-            return {
-                author: { name: 'Débora', lastname: 'Reyes' },
-                categories: categoriesObject && await getCategories(categoriesObject.values),
-                items: await Promise.all(result.data.results.map(async item => await createItem(item)))
+            if (result.data.results.length) {
+                let categoriesObject = result.data.available_filters.find(filter => filter.id == "category");
+                return {
+                    author: { name: 'Débora', lastname: 'Reyes' },
+                    categories: categoriesObject && await getCategories(categoriesObject.values),
+                    items: await Promise.all(result.data.results.map(async item => await createItem(item)))
+                }
             }
+            throw Error('No se encontraron resultados')
         })
-        .catch(error => console.log(error))
 }
 
 self.getItem = id => {
@@ -54,7 +54,6 @@ self.getItem = id => {
                 item: await createItem(result[0].data, result[1].data.plain_text || 'Sin detalles del producto')
             }
         })
-        .catch(error => console.log(error))
 }
 
 module.exports = self;

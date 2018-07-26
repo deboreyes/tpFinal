@@ -21,11 +21,11 @@ class Item extends Component {
 				return res.json();
 			})
 			.then(result => this.setState({ result: result.item, ready: true, error: '' }))
-			.catch(error => this.setState({ error, ready: false }))
+			.catch(error => this.setState({ error: 'noResults', ready: false }))
 	}
 
 	render() {
-		if (this.state.error) return <Message data='noResults' />
+		if (this.state.error) return <Message data={this.state.error} />
 		if (!this.state.ready) return <Message data='loading' />
 		let item = this.state.result;
 		return (
