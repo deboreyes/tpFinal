@@ -1,8 +1,8 @@
 const self = {};
 const axios = require('axios')
-let author = { name: 'Débora', lastname: 'Reyes' }
+var author = { name: 'Débora', lastname: 'Reyes' }
 
-async function getCategories(info) { 
+async function getCategories(info) {
 	let id = info;//si info es un id
 	if (Array.isArray(info)) {//si info es un array busco el id de la categoria que tenga el atributo results con el mayor valor
 		let filters = info.find(filter => filter.id == 'category')
