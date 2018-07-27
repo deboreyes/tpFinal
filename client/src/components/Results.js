@@ -1,79 +1,62 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import '../css/Results.css';
 import freeShippingImg from '../Assets/free-shipping.png';
 import { Breadcrumb } from './Breadcrumb';
 import { Message } from './Message';
-import { getPrice } from '../common/util';
+import { utils } from '../common/utils';
 
 class Results extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            categories: [],
-            ready: false,
-            error: ''
-        };
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			result: { items: [], categories: [] },
+			ready: false,
+			error: ''
+		};
+	}
 
-    updateState() {
-        let query
-        this.setState({ ready: false, error: false })
-        try { query = (queryString.parse(this.props.location.search)).search }
-        catch (error) { return this.setState({ error: 'format' }) }
-        if (query) {
-            fetch('/api/items?q=' + query)
-                .then(res => {
-                    if (!res.ok) throw Error(res);
-                    return res.json();
-                })
-                .then(result => this.setState({ items: result.items, categories: result.categories, ready: true, error: '' }))
-                .catch(error => this.setState({ error: 'noResults' }))
-        }
-        else this.setState({ error: query === '' ? 'empty' : '404' });//query = '' null undefined
-    }
+	async update() {
+		this.setState(await utils.searchQuery('/api/items?q=', this.props.location.search))
+	}
 
+	componentDidMount() {
+		this.update()
+	}
 
-    componentDidMount() {
-        this.updateState()
-    }
+	componentDidUpdate(prevProps) {
+		if (prevProps.location.search !== this.props.location.search) {
+			this.setState({ ready: false, error: '' })
+			this.update();
+		}
+	}
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.location.search !== this.props.location.search) {
-            this.updateState();
-        }
-    }
-
-    render() {
-        if (this.state.error) return <Message data={this.state.error} />
-        if (!this.state.ready) return <Message data='loading' />
-        return (
-            <div className='Results'>
-                {/* {!this.state.ready &&  <Message data='loading'/>} */}
-                {this.state.ready &&
-                    <div>
-                        {this.state.categories && <Breadcrumb categories={this.state.categories} />}
-                        <ul className='ulResults'>
-                            {this.state.items.map(item =>
-                                <li key={item.id} className='product'>
-                                    <Link to={`/items/${item.id}`}><img src={item.picture} alt={item.title} className='productImg' /></Link>
-                                    <div className="info">
-                                        <h4>{item.title}</h4>
-                                        <span className="price">{getPrice(item.price)}</span>
-                                        <Link to={`/items/${item.id}`}><button className="buyNow">Comprar</button></Link>
-                                    </div>
-                                    <div className="details">
-                                        <span className='state'>{item.state}</span>
-                                        {item.free_shipping && <img src={freeShippingImg} alt="Envío gratis" className='freeShipping' />}
-                                    </div>
-                                </li>)}
-                        </ul>
-                    </div>}
-            </div>
-        )
-    }
+	render() {
+		if (this.state.error) return <Message data={this.state.error} />
+		if (!this.state.ready) return <Message data='Cargando...' />
+		return (
+			<div className='Results'>
+				<div>
+					{this.state.result.categories && <Breadcrumb categories={this.state.result.categories} />}
+					<ul className='ulResults'>
+						{this.state.result.items.map(item =>
+							<li key={item.id} className='product'>
+								<Link to={`/items/${item.id}`}><img src={item.picture} alt={item.title} className='productImg' /></Link>
+								<div className='info'>
+									<h4>{item.title}</h4>
+									<span className='price'>{utils.getPrice(item.price)}</span>
+									<Link to={`/items/${item.id}`}><button className='buyNow'>Comprar</button></Link>
+								</div>
+								<div className='details'>
+									<span className='state'>{item.state}</span>
+									{item.free_shipping && <img src={freeShippingImg} alt='Envío gratis' className='freeShipping' />}
+								</div>
+							</li>)}
+					</ul>
+				</div>
+			</div>
+		)
+	}
 }
 
 export default Results;

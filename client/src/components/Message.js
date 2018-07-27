@@ -2,12 +2,8 @@ import React from 'react';
 import '../css/Message.css';
 
 export const Message = props =>
-    <div className='Message'>
-        <h4>
-            {props.data === 'loading' && 'Cargando...'}
-            {props.data === 'noResults' && 'La búsqueda no produjo resultados'}
-            {props.data === 'format' && 'Formato de búsqueda no válido'}
-            {props.data === 'empty' && 'Ingrese su búsqueda'}
-            {props.data === '404' && 'Página no encontrada'}
-        </h4>
-    </div>
+	<div className='Message'>
+		<h4>
+			{props.data === 'Not Found' ? 'No se encontraron resultados para la búsqueda' : props.data}
+		</h4>
+	</div>
