@@ -19,10 +19,8 @@ class Item extends Component {
 	}
 
 	render() {
-		if (this.state.error) return <Message data={this.state.error} />
-		if (!this.state.ready) return <Message data='Cargando...' />
 		let item = this.state.result;
-		return (
+		let product =
 			<div className='Item'>
 				<div>
 					{item.categories && <Breadcrumb categories={item.categories} />}
@@ -32,7 +30,7 @@ class Item extends Component {
 							<p className='description'>{item.description}</p>
 						</div>
 						<div className='itemDetails'>
-							<span className='conditions'>{item.condition == 'new' ? 'Nuevo' : item.condition} - {item.sold_quantity} {item.sold_quantity == 1 ? 'vendido' : 'vendidos'}</span>
+							<span className='conditions'>{item.condition === 'new' ? 'Nuevo' : item.condition} - {item.sold_quantity} {item.sold_quantity === 1 ? 'vendido' : 'vendidos'}</span>
 							<h4>{item.title}</h4>
 							<hr />
 							<div className='itemPrice'>{utils.getPrice(item.price)}</div>
@@ -41,7 +39,7 @@ class Item extends Component {
 					</div>
 				</div>
 			</div>
-		)
+		return this.state.error ? <Message data={this.state.error} /> : (!this.state.ready ? <Message data='Cargando...' /> : product)
 	}
 }
 
