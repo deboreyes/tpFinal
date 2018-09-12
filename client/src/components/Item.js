@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/Item.css';
+import '../css/item.css';
 import { Breadcrumb } from './Breadcrumb';
 import { Message } from './Message';
 import { utils } from '../common/utils';

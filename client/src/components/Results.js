@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Results.css';
+import '../css/results.css';
 import freeShippingImg from '../Assets/free-shipping.png';
 import { Breadcrumb } from './Breadcrumb';
 import { Message } from './Message';
